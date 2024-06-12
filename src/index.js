@@ -17,7 +17,7 @@ app.get("/UrunGetir",(req,res)=>{
     var con = db.getConnection() //bağlantiyi getirdik
     var urunAdi = req.query.urunAdi
     console.log(urunAdi)
-    con.query("SELECT * FROM urunler.urunler WHERE urunAdi LIKE ?" , [urunAdi+"%"],(err,result)=>{
+    con.query("SELECT * FROM urunler.urunler WHERE urunAdi LIKE ?" , ["%"+urunAdi+"%"],(err,result)=>{
         if(err){throw err}
         console.log(result)
         res.json({message:result})

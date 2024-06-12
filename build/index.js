@@ -21,7 +21,7 @@ app.get("/UrunGetir", function (req, res) {
   var con = db.getConnection(); //bağlantiyi getirdik
   var urunAdi = req.query.urunAdi;
   console.log(urunAdi);
-  con.query("SELECT * FROM urunler.urunler WHERE urunAdi LIKE ?", [urunAdi + "%"], function (err, result) {
+  con.query("SELECT * FROM urunler.urunler WHERE urunAdi LIKE ?", ["%" + urunAdi + "%"], function (err, result) {
     if (err) {
       throw err;
     }
