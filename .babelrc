@@ -1,0 +1,9 @@
+//babel kütüphanesini configire(yapılındarma) etmemize yarıyor
+{
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        "@babel/plugin-transform-runtime"
+    ]
+}
