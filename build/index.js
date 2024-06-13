@@ -20,12 +20,10 @@ app.use(_express["default"].json()); //gelen responlar için
 app.get("/UrunGetir", function (req, res) {
   var con = db.getConnection(); //bağlantiyi getirdik
   var urunAdi = req.query.urunAdi;
-  console.log(urunAdi);
   con.query("SELECT * FROM urunler.urunler WHERE urunAdi LIKE ?", ["%" + urunAdi + "%"], function (err, result) {
     if (err) {
       throw err;
     }
-    console.log(result);
     res.json({
       message: result
     });
@@ -36,13 +34,14 @@ app.post("/UrunEkle", function (req, res) {
 
   var urunAdi = req.body.urunAdi;
   var urunAciklamasi = req.body.urunAciklamasi;
-  console.log(urunAdi);
-  con.query("INSERT into urunler (urunAdi,urunAciklamasi) Values(?,?)", [urunAdi, urunAciklamasi], function (err, result) {
+  var urunlerUzunAciklama = req.body.urunlerUzunAciklama;
+  var urunlerResmi = req.body.urunlerResmi;
+  con.query("INSERT into urunler (urunAdi,urunAciklamasi,urunlerResmi,urunlerUzunAciklama) Values(?,?,?,?)", [urunAdi, urunAciklamasi, urunlerResmi, urunlerUzunAciklama], function (err, result) {
     if (err) {
       throw err;
     }
     res.json({
-      message: "Başarıyla Ekledin"
+      status: 200
     });
   });
 });
@@ -50,12 +49,13 @@ app["delete"]("/UrunSil", function (req, res) {
   var con = db.getConnection(); //bağlantıyı getirdik
 
   var idUrunler = req.query.idUrunler;
+  console.log(idUrunler);
   con.query("DELETE FROM urunler WHERE idUrunler = ?", idUrunler, function (err, result) {
     if (err) {
       throw err;
     }
     res.json({
-      message: "Başarıyla silindi"
+      status: 200
     });
   });
 });

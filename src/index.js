@@ -13,14 +13,13 @@ app.listen(3000, () => {
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json()) //gelen responlar için
 
-app.get("/UrunGetir",(req,res)=>{
+app.get("/UrunGetir", (req, res) => {
     var con = db.getConnection() //bağlantiyi getirdik
     var urunAdi = req.query.urunAdi
-    console.log(urunAdi)
-    con.query("SELECT * FROM urunler.urunler WHERE urunAdi LIKE ?" , ["%"+urunAdi+"%"],(err,result)=>{
-        if(err){throw err}
-        console.log(result)
-        res.json({message:result})
+
+    con.query("SELECT * FROM urunler.urunler WHERE urunAdi LIKE ?", ["%" + urunAdi + "%"], (err, result) => {
+        if (err) { throw err }
+        res.json({ message: result })
     })
 })
 
@@ -29,11 +28,12 @@ app.post("/UrunEkle", (req, res) => {
 
     const urunAdi = req.body.urunAdi
     const urunAciklamasi = req.body.urunAciklamasi
-    console.log(urunAdi)
-    con.query("INSERT into urunler (urunAdi,urunAciklamasi) Values(?,?)", [urunAdi, urunAciklamasi], (err, result) => {
-        if (err) { throw err }
+    const urunlerUzunAciklama = req.body.urunlerUzunAciklama
+    const urunlerResmi = req.body.urunlerResmi
 
-        res.json({ message: "Başarıyla Ekledin" })
+    con.query("INSERT into urunler (urunAdi,urunAciklamasi,urunlerResmi,urunlerUzunAciklama) Values(?,?,?,?)", [urunAdi, urunAciklamasi, urunlerResmi, urunlerUzunAciklama], (err, result) => {
+        if (err) { throw err }
+        res.json({ status: 200 })
     })
 })
 
@@ -41,9 +41,9 @@ app.delete("/UrunSil", (req, res) => {
     var con = db.getConnection() //bağlantıyı getirdik
 
     const idUrunler = req.query.idUrunler
-
+    console.log(idUrunler)
     con.query("DELETE FROM urunler WHERE idUrunler = ?", idUrunler, (err, result) => {
         if (err) { throw err }
-        res.json({ message: "Başarıyla silindi" })
+        res.json({ status: 200 })
     })
 })
