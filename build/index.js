@@ -49,7 +49,6 @@ app["delete"]("/UrunSil", function (req, res) {
   var con = db.getConnection(); //bağlantıyı getirdik
 
   var idUrunler = req.query.idUrunler;
-  console.log(idUrunler);
   con.query("DELETE FROM urunler WHERE idUrunler = ?", idUrunler, function (err, result) {
     if (err) {
       throw err;

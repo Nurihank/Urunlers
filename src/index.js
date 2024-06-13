@@ -41,7 +41,6 @@ app.delete("/UrunSil", (req, res) => {
     var con = db.getConnection() //bağlantıyı getirdik
 
     const idUrunler = req.query.idUrunler
-    console.log(idUrunler)
     con.query("DELETE FROM urunler WHERE idUrunler = ?", idUrunler, (err, result) => {
         if (err) { throw err }
         res.json({ status: 200 })
