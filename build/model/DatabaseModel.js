@@ -11,7 +11,7 @@ module.exports = /*#__PURE__*/function () {
     this.con = _mysql["default"].createConnection({
       host: "localhost",
       user: "root",
-      password: "nurihan38",
+      password: "15935738a",
       database: "urunler"
     });
   }

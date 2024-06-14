@@ -6,7 +6,7 @@ module.exports = class DataBase {
         this.con = mysql.createConnection({
             host: "localhost",
             user: "root",
-            password: "nurihan38",
+            password: "15935738a",
             database: "urunler"
         })
     }
