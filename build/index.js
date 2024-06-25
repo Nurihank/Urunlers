@@ -16,7 +16,7 @@ app.use(_express["default"].urlencoded({
   extended: true
 }));
 app.use(_express["default"].json()); //gelen responlar için
-
+app.use;
 app.get("/UrunGetir", function (req, res) {
   var con = db.getConnection(); //bağlantiyi getirdik
   var urunAdi = req.query.urunAdi;
@@ -55,6 +55,57 @@ app["delete"]("/UrunSil", function (req, res) {
     }
     res.json({
       status: 200
+    });
+  });
+});
+app.get("/KategoriGetir", function (req, res) {
+  var con = db.getConnection(); //bağlantiyi getirdik
+  var kategoriAdi = req.query.kategoriAdi;
+  console.log(kategoriAdi);
+  con.query("SELECT * FROM kategori WHERE kategoriAdi LIKE ?", ["%" + kategoriAdi + "%"], function (err, result) {
+    if (err) {
+      throw err;
+    }
+    console.log(result);
+    res.json({
+      message: result
+    });
+  });
+});
+app.post("/KategoriEkle", function (req, res) {
+  var con = db.getConnection(); //bağlantıyı getirdik
+
+  var kategoriAdi = req.body.kategoriAdi;
+  con.query("INSERT into kategori (kategoriAdi) Values(?)", [kategoriAdi], function (err, result) {
+    if (err) {
+      throw err;
+    }
+    res.json({
+      status: 200
+    });
+  });
+});
+app["delete"]("/KategoriSil", function (req, res) {
+  var con = db.getConnection(); //bağlantıyı getirdik
+
+  var idKategori = req.query.idKategori;
+  con.query("DELETE FROM kategori WHERE idkategori = ?", idKategori, function (err, result) {
+    if (err) {
+      throw err;
+    }
+    res.json({
+      status: 200
+    });
+  });
+});
+app.get("/KategoriyeGoreUrun", function (req, res) {
+  var con = db.getConnection();
+  var id = req.query.id;
+  console.log(id);
+  con.query("SELECT * FROM urunler WHERE IDKategori=?", [id], function (err, result) {
+    if (err) throw err;
+    res.json({
+      message: result
     });
   });
 });
