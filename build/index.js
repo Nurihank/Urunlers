@@ -101,9 +101,41 @@ app["delete"]("/KategoriSil", function (req, res) {
 app.get("/KategoriyeGoreUrun", function (req, res) {
   var con = db.getConnection();
   var id = req.query.id;
-  console.log(id);
   con.query("SELECT * FROM urunler WHERE IDKategori=?", [id], function (err, result) {
     if (err) throw err;
+    res.json({
+      message: result
+    });
+  });
+});
+app.get("/UcuzdanPahaliya", function (req, res) {
+  var con = db.getConnection();
+  con.query("SELECT * FROM urunler.urunler ORDER BY fiyat ASC", function (err, result) {
+    if (err) {
+      throw err;
+    }
+    res.json({
+      message: result
+    });
+  });
+});
+app.get("/PahalidanUcuza", function (req, res) {
+  var con = db.getConnection();
+  con.query("SELECT * FROM urunler.urunler ORDER BY fiyat DESC", function (err, result) {
+    if (err) {
+      throw err;
+    }
+    res.json({
+      message: result
+    });
+  });
+});
+app.get("/AdanZye", function (req, res) {
+  var con = db.getConnection();
+  con.query("SELECT * FROM urunler.urunler ORDER BY urunAdi ASC", function (err, result) {
+    if (err) {
+      throw err;
+    }
     res.json({
       message: result
     });

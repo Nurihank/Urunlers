@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express"; //express http istekleri yönetmemizi sağlar
+import express, { json, urlencoded } from "express"; //express http istekleri yönetmemizi sağlar
 var dbGetir = require("./model/DatabaseModel"); //dataBase'i getirdik
 
 var db = new dbGetir() //constructoru çağırdık 
@@ -85,9 +85,38 @@ app.get("/KategoriyeGoreUrun",(req,res)=>{
     var con = db.getConnection()
 
     const id = req.query.id
-    console.log(id)
     con.query("SELECT * FROM urunler WHERE IDKategori=?",[id],(err,result)=>{
         if(err) throw err
+        res.json({message:result})
+    })
+})
+
+app.get("/UcuzdanPahaliya",(req,res)=>{
+    var con = db.getConnection()
+
+    con.query("SELECT * FROM urunler.urunler ORDER BY fiyat ASC",(err,result)=>{
+        if(err){throw err}
+
+        res.json({message:result})
+    })
+})
+
+app.get("/PahalidanUcuza",(req,res)=>{
+    var con = db.getConnection()
+
+    con.query("SELECT * FROM urunler.urunler ORDER BY fiyat DESC",(err,result)=>{
+        if(err){throw err}
+
+        res.json({message:result})
+    })
+})
+
+app.get("/AdanZye",(req,res)=>{
+    var con = db.getConnection()
+
+    con.query("SELECT * FROM urunler.urunler ORDER BY urunAdi ASC",(err,result)=>{
+        if(err){throw err}
+
         res.json({message:result})
     })
 })
